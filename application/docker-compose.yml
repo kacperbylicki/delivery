@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  delivery-company-app-mongodb:
+    container_name: delivery-company-app-mongodb
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - delivery-company-app-mongodb:/data/db
+    ports:
+      - ${MONGODB_PORT:-27017}:${MONGODB_PORT:-27017}
+    networks:
+      - webnet
+    restart: always
+
+  delivery-company-app-backend:
+    container_name: delivery-company-app-backend
+    build:
+      context: .
+      target: development
+    environment:
+      MONGODB_URI: mongodb://delivery-company-app-mongodb:${MONGODB_PORT:-27017}/${MONGODB_DATABASE}
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - ${PORT:-3000}:${PORT:-3000}
+      - ${DEBUGGER_PORT:-9229}:${DEBUGGER_PORT:-9229}
+    depends_on:
+      - delivery-company-app-mongodb
+    networks:
+      - webnet
+    restart: unless-stopped
+
+volumes:
+  delivery-company-app-mongodb:
+
+networks:
+  webnet:
