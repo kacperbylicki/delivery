@@ -1,11 +1,34 @@
-import { DeliveryController } from "./application/controller/delivery.controller";
-import { DeliveryService } from "./application/service/delivery.service";
+import {
+  CreateDeliveryService,
+  DeleteDeliveryService,
+  DeliveryController,
+  GetAllDeliveriesService,
+  GetDeliveryByIdService,
+  GetDeliveryByTrackingNumberService,
+  UpdateDeliveryStatusService,
+} from "./application";
+import { DeliveryModelDefinition } from "./infrastructure";
 import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
 
 @Module({
-  //   imports: [MongooseModule.forFeature([{ name: Delivery.name, schema: DeliveryEntity }])],
+  imports: [MongooseModule.forFeature([DeliveryModelDefinition])],
   controllers: [DeliveryController],
-  providers: [DeliveryService],
-  exports: [DeliveryService],
+  providers: [
+    CreateDeliveryService,
+    UpdateDeliveryStatusService,
+    DeleteDeliveryService,
+    GetAllDeliveriesService,
+    GetDeliveryByIdService,
+    GetDeliveryByTrackingNumberService,
+  ],
+  exports: [
+    CreateDeliveryService,
+    UpdateDeliveryStatusService,
+    DeleteDeliveryService,
+    GetAllDeliveriesService,
+    GetDeliveryByIdService,
+    GetDeliveryByTrackingNumberService,
+  ],
 })
 export class DeliveryModule {}
