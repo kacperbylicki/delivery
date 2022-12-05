@@ -1,6 +1,7 @@
 import { Delivery } from "../../domain";
 import { DeliveryMapper } from "../mapper";
 import { Delivery as DeliveryModel } from "../model";
+import { DeliveryQueryDTO } from "../../application/dto/delivery.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Repository } from "../../../common";
@@ -8,7 +9,7 @@ import { Repository } from "../../../common";
 export interface IDeliveryRepository extends Repository<Delivery> {
   getOneById(uuid: string): Promise<Delivery | null>;
   getOneByTrackingNumber(trackingNumber: string): Promise<Delivery | null>;
-  getAllByCourierId(courierId: string): Promise<Delivery[]>;
+  getAll(query?: DeliveryQueryDTO): Promise<Delivery[]>;
 }
 
 export class DeliveryRepository implements IDeliveryRepository {
@@ -35,8 +36,14 @@ export class DeliveryRepository implements IDeliveryRepository {
     return persistedDelivery ? DeliveryMapper.toDomain(persistedDelivery) : null;
   }
 
-  async getAllByCourierId(courierId: string): Promise<Delivery[]> {
-    const persistedDeliveries = await this.deliveryModel.find({ "courier.uuid": courierId });
+  async getAll(queryDto?: DeliveryQueryDTO): Promise<Delivery[]> {
+    const query = {
+      status: queryDto?.status,
+      deliveryDate: queryDto?.date,
+      "courier.uuid": queryDto?.courierId,
+    };
+
+    const persistedDeliveries = await this.deliveryModel.find(query);
 
     const deliveries = persistedDeliveries.map((delivery: DeliveryModel) =>
       DeliveryMapper.toDomain(delivery),

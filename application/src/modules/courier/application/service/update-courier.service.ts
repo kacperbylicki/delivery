@@ -1,7 +1,7 @@
 import { BaseService } from "../../../common";
 import { Courier } from "../../domain";
 import { CourierRepository } from "../../infrastructure";
-import { NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { UpdateCourierDTO } from "../dto";
 
 type UpdateCourierPayload = {
@@ -9,6 +9,7 @@ type UpdateCourierPayload = {
   data: UpdateCourierDTO;
 };
 
+@Injectable()
 export class UpdateCourierService implements BaseService<UpdateCourierPayload, Courier | null> {
   constructor(private readonly courierRepository: CourierRepository) {}
 

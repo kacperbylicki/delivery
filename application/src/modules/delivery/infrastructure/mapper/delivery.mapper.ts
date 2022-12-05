@@ -28,6 +28,7 @@ export class DeliveryMapper {
       recipient: delivery.recipient,
       courier: delivery.courier,
       status: delivery.status,
+      deliveryDate: delivery.deliveryDate,
       width: delivery.width,
       length: delivery.length,
       height: delivery.height,

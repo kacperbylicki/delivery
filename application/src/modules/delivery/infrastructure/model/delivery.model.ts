@@ -6,28 +6,31 @@ import { Sender } from "../../domain/entity/sender.entity";
 
 @Schema()
 export class Delivery extends Model {
-  @Prop({ type: String, unique: true })
+  @Prop({ type: String, unique: true, required: true })
   uuid!: string;
 
-  @Prop({ type: Sender })
+  @Prop({ type: Sender, required: true })
   sender!: Sender;
 
-  @Prop({ type: Recipient })
+  @Prop({ type: Recipient, required: true })
   recipient!: Recipient;
 
-  @Prop({ type: String, enum: DeliveryStatus })
+  @Prop({ type: String, enum: DeliveryStatus, required: true })
   status!: string;
 
-  @Prop({ type: Number })
+  @Prop({ type: Date, required: true })
+  deliveryDate!: Date;
+
+  @Prop({ type: Number, required: true })
   length!: number;
 
-  @Prop({ type: Number })
+  @Prop({ type: Number, required: true })
   width!: number;
 
-  @Prop({ type: Number })
+  @Prop({ type: Number, required: true })
   height!: number;
 
-  @Prop({ type: Number })
+  @Prop({ type: Number, required: true })
   weight!: number;
 }
 

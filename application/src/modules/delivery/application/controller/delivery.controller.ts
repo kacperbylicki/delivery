@@ -43,10 +43,10 @@ export class DeliveryController {
     return this.getDeliveryService.execute(deliveryId);
   }
 
-  @Get()
+  @Get("/tracking/:trackingNumber")
   @HttpCode(HttpStatus.OK)
   async getDeliveryByTrackingNumber(
-    @Query("trackingNumber") trackingNumber: string,
+    @Param("trackingNumber") trackingNumber: string,
   ): Promise<Delivery | null> {
     return this.getDeliveryByTrackingNumberService.execute(trackingNumber);
   }

@@ -1,7 +1,9 @@
 import { BaseService } from "../../../common";
 import { Delivery } from "../../domain/entity/delivery.entity";
 import { DeliveryRepository } from "../../infrastructure/repository/delivery.repository";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class GetDeliveryByIdService implements BaseService<string, Delivery | null> {
   constructor(private readonly deliveryRepository: DeliveryRepository) {}
 

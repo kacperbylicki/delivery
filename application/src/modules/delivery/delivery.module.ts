@@ -1,3 +1,4 @@
+import { CourierModule } from "../courier";
 import {
   CreateDeliveryService,
   DeleteDeliveryService,
@@ -7,12 +8,12 @@ import {
   GetDeliveryByTrackingNumberService,
   UpdateDeliveryStatusService,
 } from "./application";
-import { DeliveryModelDefinition } from "./infrastructure";
+import { DeliveryModelDefinition, DeliveryRepository } from "./infrastructure";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 
 @Module({
-  imports: [MongooseModule.forFeature([DeliveryModelDefinition])],
+  imports: [MongooseModule.forFeature([DeliveryModelDefinition]), CourierModule],
   controllers: [DeliveryController],
   providers: [
     CreateDeliveryService,
@@ -21,6 +22,7 @@ import { MongooseModule } from "@nestjs/mongoose";
     GetAllDeliveriesService,
     GetDeliveryByIdService,
     GetDeliveryByTrackingNumberService,
+    DeliveryRepository,
   ],
   exports: [
     CreateDeliveryService,

@@ -6,8 +6,6 @@ services:
     image: mongo:latest
     environment:
       MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - delivery-company-app-mongodb:/data/db
     ports:

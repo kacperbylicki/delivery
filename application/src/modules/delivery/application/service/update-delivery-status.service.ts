@@ -1,7 +1,7 @@
 import { BaseService } from "../../../common";
 import { Delivery } from "../../domain/entity/delivery.entity";
 import { DeliveryRepository } from "../../infrastructure";
-import { NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { UpdateDeliveryStatusDTO } from "../dto/delivery.dto";
 
 type UpdateDeliveryStatusPayload = {
@@ -9,6 +9,7 @@ type UpdateDeliveryStatusPayload = {
   data: UpdateDeliveryStatusDTO;
 };
 
+@Injectable()
 export class UpdateDeliveryStatusService
   implements BaseService<UpdateDeliveryStatusPayload, Delivery | null>
 {

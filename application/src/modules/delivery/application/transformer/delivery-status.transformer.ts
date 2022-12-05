@@ -1,6 +1,6 @@
-import snakeCase from "lodash.snakecase";
 import { BadRequestException } from "@nestjs/common";
 import { DeliveryStatus } from "../../domain/enum/delivery-status.enum";
+import { snakeCase } from "lodash";
 
 export const toStatusEnum = (value: string): DeliveryStatus => {
   const snakeCaseStatus = snakeCase(value).toUpperCase();

@@ -10,6 +10,7 @@ interface IDelivery {
   recipient: Recipient;
   courier: Courier;
   status: DeliveryStatus;
+  deliveryDate: Date;
   length: number;
   width: number;
   height: number;
@@ -21,6 +22,7 @@ export class Delivery extends Entity {
   public recipient!: Recipient;
   public courier!: Courier;
   public status!: DeliveryStatus;
+  public deliveryDate!: Date;
   public length!: number;
   public width!: number;
   public height!: number;
@@ -33,6 +35,7 @@ export class Delivery extends Entity {
     this.recipient = props.recipient;
     this.courier = props.courier;
     this.status = props.status;
+    this.deliveryDate = props.deliveryDate;
     this.length = props.length;
     this.width = props.width;
     this.height = props.height;
@@ -46,6 +49,7 @@ export class Delivery extends Entity {
         recipient: props.recipient,
         courier: props.courier,
         status: DeliveryStatus[props.status],
+        deliveryDate: props.deliveryDate,
         length: props.length,
         width: props.width,
         height: props.height,

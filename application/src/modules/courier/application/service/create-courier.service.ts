@@ -1,10 +1,11 @@
 import { BaseService } from "../../../common";
-import { ConflictException } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { Courier } from "../../domain";
 import { CourierMapper } from "../../infrastructure/mapper";
 import { CourierRepository } from "../../infrastructure";
 import { CreateCourierDTO } from "../dto";
 
+@Injectable()
 export class CreateCourierService implements BaseService<CreateCourierDTO, Courier> {
   constructor(private readonly courierRepository: CourierRepository) {}
 

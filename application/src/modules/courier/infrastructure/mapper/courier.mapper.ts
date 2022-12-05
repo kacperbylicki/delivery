@@ -1,5 +1,5 @@
 import { Courier } from "../../domain";
-import { Courier as CourierModel } from "..";
+import { CourierModel } from "../model";
 
 export class CourierMapper {
   static toDomain(raw: any): Courier {
