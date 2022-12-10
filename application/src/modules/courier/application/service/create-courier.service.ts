@@ -10,13 +10,13 @@ export class CreateCourierService implements BaseService<CreateCourierDTO, Couri
   constructor(private readonly courierRepository: CourierRepository) {}
 
   async execute(data: CreateCourierDTO): Promise<Courier> {
-    const courier = CourierMapper.toDomain(data);
-
-    const courierExists = await this.courierRepository.exists(courier.uuid);
+    const courierExists = await this.courierRepository.exists(data.pesel);
 
     if (courierExists) {
       throw new ConflictException("Courier already exists");
     }
+
+    const courier = CourierMapper.toDomain(data);
 
     return this.courierRepository.saveAndReturn(courier);
   }

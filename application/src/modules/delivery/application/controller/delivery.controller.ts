@@ -69,6 +69,7 @@ export class DeliveryController {
     @Param("id") deliveryId: string,
     @Body() data: UpdateDeliveryStatusDTO,
   ): Promise<Delivery | null> {
+    console.log(data);
     return this.updateDeliveryStatusService.execute({ deliveryId, data });
   }
 

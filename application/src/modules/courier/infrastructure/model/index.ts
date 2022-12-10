@@ -1,1 +1,1 @@
-export * from "./courier.model";
+export { Courier as CourierModel, CourierSchema, CourierModelDefinition } from "./courier.model";

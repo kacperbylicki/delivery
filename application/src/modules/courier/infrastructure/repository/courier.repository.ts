@@ -48,7 +48,9 @@ export class CourierRepository implements ICourierRepository {
   }
 
   async updateAndReturn({ uuid, ...courier }: Partial<Courier>): Promise<Courier | null> {
-    const updatedCourier = await this.courierModel.findOneAndUpdate({ uuid }, courier);
+    const updatedCourier = await this.courierModel.findOneAndUpdate({ uuid }, courier, {
+      new: true,
+    });
 
     return updatedCourier ? CourierMapper.toDomain(updatedCourier) : null;
   }

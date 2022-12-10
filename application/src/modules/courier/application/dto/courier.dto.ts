@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsAdult } from "../decorator";
 import { IsString, MaxLength, MinLength } from "class-validator";
+import { PartialType } from "@nestjs/mapped-types";
 
 export class CreateCourierDTO {
   @IsString()
@@ -15,10 +17,11 @@ export class CreateCourierDTO {
   surname!: string;
 
   @IsString()
+  @IsAdult({ message: "Courier must be an adult" })
   @MinLength(11)
   @MaxLength(11)
   @ApiProperty({ example: `99090911111` })
   pesel!: string;
 }
 
-export type UpdateCourierDTO = Partial<CreateCourierDTO>;
+export class UpdateCourierDTO extends PartialType(CreateCourierDTO) {}

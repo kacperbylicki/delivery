@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { DeliveryStatus } from "../../domain/enum/delivery-status.enum";
-import { IsNumber, IsOptional, IsString, Max, Min, ValidateNested } from "class-validator";
+import { IsEnum, IsNumber, IsOptional, IsString, Max, Min, ValidateNested } from "class-validator";
 import { RecipientDTO } from "./recipient.dto";
 import { SenderDTO } from "./sender.dto";
 import { Transform, Type } from "class-transformer";
@@ -42,11 +42,13 @@ export class CreateDeliveryDTO {
 
 export class UpdateDeliveryStatusDTO {
   @Transform(({ value }) => toStatusEnum(value))
+  @IsEnum(DeliveryStatus)
   public status!: DeliveryStatus;
 }
 
 export class DeliveryQueryDTO {
   @Transform(({ value }) => toStatusEnum(value))
+  @IsEnum(DeliveryStatus)
   @IsOptional()
   public status?: DeliveryStatus;
 

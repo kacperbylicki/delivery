@@ -3,7 +3,7 @@ name: delivery-app-deployment
 on:
   push:
     branches:
-      - 'main'
+      - 'env-*'
 
 jobs:
   build-and-deploy:

@@ -4,9 +4,12 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { Logger } from "nestjs-pino";
 import { NestFactory } from "@nestjs/core";
 import { RequestMethod, ValidationPipe } from "@nestjs/common";
+import { useContainer } from "class-validator";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true, bufferLogs: true });
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.enableCors({
     origin: "*",

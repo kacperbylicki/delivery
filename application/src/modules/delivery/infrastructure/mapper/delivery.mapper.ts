@@ -16,7 +16,19 @@ export class DeliveryMapper {
     const status = raw.status ?? DeliveryStatus.CREATED;
 
     return Delivery.create(
-      { ...raw, sender, recipient, courier, trackingNumber, status },
+      {
+        uuid: raw.uuid,
+        sender,
+        recipient,
+        courier,
+        status,
+        trackingNumber,
+        deliveryDate: raw.deliveryDate,
+        width: raw.width,
+        length: raw.length,
+        height: raw.height,
+        weight: raw.weight,
+      },
       raw.uuid,
     );
   }
@@ -28,6 +40,7 @@ export class DeliveryMapper {
       recipient: delivery.recipient,
       courier: delivery.courier,
       status: delivery.status,
+      trackingNumber: delivery.trackingNumber,
       deliveryDate: delivery.deliveryDate,
       width: delivery.width,
       length: delivery.length,

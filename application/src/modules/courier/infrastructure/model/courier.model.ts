@@ -2,7 +2,7 @@ import { Model } from "mongoose";
 import { ModelDefinition, Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 @Schema()
-export class CourierModel extends Model {
+export class Courier extends Model {
   @Prop({ type: String, unique: true })
   uuid!: string;
 
@@ -16,8 +16,8 @@ export class CourierModel extends Model {
   pesel!: string;
 }
 
-export const CourierSchema = SchemaFactory.createForClass(CourierModel);
+export const CourierSchema = SchemaFactory.createForClass(Courier);
 export const CourierModelDefinition: ModelDefinition = {
-  name: CourierModel.name,
+  name: Courier.name,
   schema: CourierSchema,
 };

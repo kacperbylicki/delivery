@@ -5,6 +5,7 @@ import { DeliveryQueryDTO } from "../../application/dto/delivery.dto";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Repository } from "../../../common";
+import { identity, pickBy } from "lodash";
 
 export interface IDeliveryRepository extends Repository<Delivery> {
   getOneById(uuid: string): Promise<Delivery | null>;
@@ -37,11 +38,14 @@ export class DeliveryRepository implements IDeliveryRepository {
   }
 
   async getAll(queryDto?: DeliveryQueryDTO): Promise<Delivery[]> {
-    const query = {
-      status: queryDto?.status,
-      deliveryDate: queryDto?.date,
-      "courier.uuid": queryDto?.courierId,
-    };
+    const query = pickBy(
+      {
+        status: queryDto?.status,
+        deliveryDate: queryDto?.date,
+        "courier.uuid": queryDto?.courierId,
+      },
+      identity,
+    );
 
     const persistedDeliveries = await this.deliveryModel.find(query);
 
@@ -62,7 +66,11 @@ export class DeliveryRepository implements IDeliveryRepository {
   }
 
   async updateAndReturn({ uuid, status }: Partial<Delivery>): Promise<Delivery | null> {
-    const updatedDelivery = await this.deliveryModel.findOneAndUpdate({ uuid }, { status });
+    const updatedDelivery = await this.deliveryModel.findOneAndUpdate(
+      { uuid },
+      { status },
+      { new: true },
+    );
 
     return updatedDelivery ? DeliveryMapper.toDomain(updatedDelivery) : null;
   }

@@ -5,7 +5,7 @@ import { Delivery } from "../../domain/entity/delivery.entity";
 import { DeliveryMapper } from "../../infrastructure/mapper/delivery.mapper";
 import { DeliveryRepository } from "../../infrastructure/repository/delivery.repository";
 import { GetRandomCourierService } from "../../../courier";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 
 @Injectable()
 export class CreateDeliveryService implements BaseService<CreateDeliveryDTO, Delivery> {
@@ -16,7 +16,12 @@ export class CreateDeliveryService implements BaseService<CreateDeliveryDTO, Del
 
   async execute(data: CreateDeliveryDTO): Promise<Delivery> {
     const courier = await this.getRandomCourierService.execute();
-    const deliveryDate = dayjs().add(2, "day").toDate();
+
+    if (!courier) {
+      throw new NotFoundException("Courier for delivery could not have been found.");
+    }
+
+    const deliveryDate = dayjs().add(2, "day").format("YYYY-MM-DD");
 
     const delivery = DeliveryMapper.toDomain({ ...data, courier, deliveryDate });
 

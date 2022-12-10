@@ -1,3 +1,4 @@
+import { Courier } from "../../../courier";
 import { DeliveryStatus } from "../../domain/enum/delivery-status.enum";
 import { Model } from "mongoose";
 import { ModelDefinition, Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
@@ -15,11 +16,14 @@ export class Delivery extends Model {
   @Prop({ type: Recipient, required: true })
   recipient!: Recipient;
 
+  @Prop({ type: Courier, required: true })
+  courier!: Courier;
+
   @Prop({ type: String, enum: DeliveryStatus, required: true })
   status!: string;
 
-  @Prop({ type: Date, required: true })
-  deliveryDate!: Date;
+  @Prop({ type: String, required: true })
+  deliveryDate!: string;
 
   @Prop({ type: Number, required: true })
   length!: number;
